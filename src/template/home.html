@@ -1,0 +1,97 @@
+<section class="row" ng-app="filmsApp">
+    <noscript>
+        <div class="nojs">Javascript is either disabled or not supported in your browser. Please enable it or use a Javascript enabled browser.</div>
+    </noscript>
+
+    <div class="col-md-12">
+        <div class="input-group search-bar">
+            <input type="text" ng-model="search" class="form-control" placeholder="Enter full movie name"/>
+            <span class="input-group-addon bar-style" ng-click="fetch()"><i class="glyphicon glyphicon-search"></i></span>
+        </div>
+    </div>
+
+    <main id="main-info" class="col-md-12">
+        <div ng-if="status==='True'">
+
+            <md-radio-group ng-model="data.group">
+                <md-radio-button value=""> All </md-radio-button>
+                <md-radio-button value="movie"> Movie </md-radio-button>
+                <md-radio-button value="series"> Series </md-radio-button>
+                <md-radio-button value="episode"> Episode </md-radio-button>
+            </md-radio-group>
+            <div class="pagination-info">
+                <div>Results: {{totalResults}}</div>
+                <div>Displayed results: {{filterFilms.length}} </div>
+            </div>
+            <table class="films-table" infinite-scroll="fetch()" infinite-scroll-distance="1" infinite-scroll-disabled="busy">
+                <thead>
+                    <tr>
+                        <th class="xshort-column center"></th>
+                        <th class="center">Poster</th>
+                        <th class="center">Title</th>
+                        <th class="center short-column">Year</th>
+                        <th class="center short-column">Type</th>
+                        <th class="center xshort-column"></th>
+                    </tr>
+                    <tr>
+                        <td class="xshort-column"></td><!-- index -->
+                        <td></td><!-- Poster -->
+                        <td><!-- Title -->
+                            <div class="table-filter input-group">
+                                <input class="form-control" type="text" ng-model="title" placeholder="Title"/>
+                            </div>
+                        </td>
+                        <td class="short-column"><!-- Year -->
+                            <div class="table-filter input-group">
+                                <input class="form-control" type="text" ng-model="year" placeholder="Year"/>
+                            </div>
+                        </td>
+                        <td class="short-column"></td><!-- Type -->
+                        <td class="xshort-column"></td><!-- Detail -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="films-list-item" ng-repeat="film in filterFilms = (films | filter: title | filter: year | filter: data.group )">
+                        <td class="xshort-column center">
+                            {{$index + 1}}
+                        </td>
+                        <td class="film-poster">
+                            <div class="image-wrapper">
+                                <img ng-src="{{ film.Poster }}" alt="{{ film.Title }}">
+                            </div>
+                        </td>
+                        <td>
+                            {{ film.Title }}
+                        </td>
+                        <td class="short-column">
+                            {{ film.Year }}
+                        </td>
+                        <td class="center short-column">
+                            {{ film.Type }}
+                        </td>
+                        <td class="center xshort-column">
+                            <a href="/{{film.imdbID}}"><span title="Details" class="glyphicon glyphicon-eye-open"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div ng-if="filterFilms.length===0">
+                <div>Nothing</div>
+            </div>
+        </div>
+
+        <div ng-show="busy">
+            <div layout="row" layout-sm="column" layout-align="space-around">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+        </div>
+
+        <div ng-if="status==='False'">
+            <div class="alert alert-warning" role="alert">
+                <strong>Opps!</strong>
+                {{errorMessage}}
+            </div>
+        </div>
+    </main>
+
+</section>

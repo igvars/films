@@ -1,0 +1,42 @@
+@import "variables";
+
+.film-detail {
+  font-size: 0;
+  .film-poster {
+    font-size: $default-font-size;
+    display: inline-block;
+    vertical-align: top;
+    width: 300px;
+    margin-right: 15px;
+
+    & > img {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+  .film-info {
+    font-size: $default-font-size;
+    display: inline-block;
+    vertical-align: top;
+    width: calc(100% - 315px);
+  }
+}
+
+.btn-info {
+  margin: 15px 0;
+}
+@media only screen and (max-width: 767px) {
+  .film-detail {
+    .film-poster {
+      display: block;
+      text-align: center;
+      width: 100%;
+      margin-bottom: 15px;
+      margin-right: 0;
+    }
+    .film-info {
+      display: block;
+      width: 100%;
+    }
+  }
+}

@@ -86,6 +86,9 @@ filmsApp.controller "FilmsListCtrl", [
       lastPage = getLastPage $scope.totalResults
       page = newPage
       $scope.busy = false
+    checkInput = ->
+      $scope.search = do $scope.search.trim
+      $scope.search = encodeURI $scope.search
 
     $scope.clearWebStorage = ->
       localStorage.removeItem "savedFilms"
@@ -94,6 +97,7 @@ filmsApp.controller "FilmsListCtrl", [
 
     $scope.fetch = ->
       return if $scope.busy
+      do checkInput
       if oldSearch isnt $scope.search
         oldSearch = $scope.search
         if getQuery $scope.search
@@ -114,16 +118,21 @@ filmsApp.controller "FilmsListCtrl", [
         else
           $scope.busy = true
           $http.get("http://www.omdbapi.com/?s=#{$scope.search}&page=#{page}")
-          .then((response) ->
-            if response.data.Search
-              for film in response.data.Search
+          .success((response) ->
+            if response.Response == "True"
+              for film in response.Search
                 $scope.films.push film
               saveFilms $scope.search, $scope.films, page, $scope.totalResults
-              updateScope $scope.films, response.data.Response, response.data.Error, getResponseTotalResults(response.data.totalResults), page + 1
+              updateScope $scope.films, response.Response, response.Error, getResponseTotalResults(response.totalResults), page + 1
             else
               $scope.films = []
               saveFilms $scope.search, [], 1, 0
-              updateScope [], response.data.Response, response.data.Error, 0, 1
+              updateScope [], response.Response, response.Error, 0, 1
+          )
+          .error( (data, code) ->
+            $scope.busy = false
+            saveFilms $scope.search, [], 1, 0
+            updateScope [], "False", "Something went wrong", 0, 1
           )
 ]
 

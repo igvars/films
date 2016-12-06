@@ -166,7 +166,7 @@ filmsApp.controller "ViewCtrl", [
 
     if getSavedSingleFilm $routeParams.filmId
       film = getSavedSingleFilm $routeParams.filmId
-      updateScope film.data, "True", ""
+      updateScope film.data, film.data.Response, film.data.Error
     else
       $scope.busy = true
       $http.get("http://www.omdbapi.com/?i=#{$routeParams.filmId}&plot=full")

@@ -1,31 +1,42 @@
 <section>
-    <h1 class="page-header">{{film.Title}}</h1>
-    <div ng-show="!busy">
-        <main class="film-detail">
-            <div class="film-poster">
-                <img ng-src="{{ film.Poster }}" alt="{{ film.Title }}">
-            </div>
-            <div class="film-info">
-                <p><strong>Actors:</strong> {{film.Actors}}</p>
-                <p><strong>Awards:</strong> {{film.Awards}}</p>
-                <p><strong>Country:</strong> {{film.Country}}</p>
-                <p><strong>Director:</strong> {{film.Director}}</p>
-                <p><strong>Genre:</strong> {{film.Genre}}</p>
-                <p><strong>Metascore:</strong> {{film.Metascore}}</p>
-                <p><strong>Plot:</strong> {{film.Plot}}</p>
-                <p><strong>Rated:</strong> {{film.Rated}}</p>
-                <p><strong>Released:</strong> {{film.Released}}</p>
-                <p><strong>Runtime:</strong> {{film.Runtime}}</p>
-                <p><strong>Type:</strong> {{film.Type}}</p>
-                <p><strong>Writer:</strong> {{film.Writer}}</p>
-                <p><strong>Year:</strong> {{film.Year}}</p>
-                <p><strong>imdbRating:</strong> {{film.imdbRating}}</p>
-            </div>
-        </main>
-    </div>
+
     <div ng-show="busy">
         <div layout="row" layout-sm="column" layout-align="space-around">
             <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+
+    <div ng-if="status==='True'">
+        <h1 class="page-header">{{film.Title}}</h1>
+        <div ng-show="!busy">
+            <main class="film-detail">
+                <div class="film-poster">
+                    <img ng-src="{{ film.Poster }}" alt="{{ film.Title }}">
+                </div>
+                <div class="film-info">
+                    <p><strong>Actors:</strong> {{film.Actors}}</p>
+                    <p><strong>Awards:</strong> {{film.Awards}}</p>
+                    <p><strong>Country:</strong> {{film.Country}}</p>
+                    <p><strong>Director:</strong> {{film.Director}}</p>
+                    <p><strong>Genre:</strong> {{film.Genre}}</p>
+                    <p><strong>Metascore:</strong> {{film.Metascore}}</p>
+                    <p><strong>Plot:</strong> {{film.Plot}}</p>
+                    <p><strong>Rated:</strong> {{film.Rated}}</p>
+                    <p><strong>Released:</strong> {{film.Released}}</p>
+                    <p><strong>Runtime:</strong> {{film.Runtime}}</p>
+                    <p><strong>Type:</strong> {{film.Type}}</p>
+                    <p><strong>Writer:</strong> {{film.Writer}}</p>
+                    <p><strong>Year:</strong> {{film.Year}}</p>
+                    <p><strong>imdbRating:</strong> {{film.imdbRating}}</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div ng-if="status==='False'">
+        <div class="alert alert-warning margin-top" role="alert">
+            <strong>Opps!</strong>
+            {{errorMessage}}
         </div>
     </div>
     <a class="back-button btn btn-info" href="/">Back to list</a>

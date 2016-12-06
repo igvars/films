@@ -2,7 +2,7 @@
 
 .search-bar {
   margin-top: 25px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 
   .input-group-addon:focus {
     outline: none;
@@ -11,8 +11,8 @@
     background-color: #ccc;
   }
 }
-.table-cell {
-  border-bottom: 1px solid $black-color;
+.btn-warning {
+  margin-bottom: 15px;
 }
 .film-poster {
   width: 50px;

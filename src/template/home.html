@@ -8,6 +8,8 @@
             <input type="text" ng-model="search" class="form-control" placeholder="Enter full movie name"/>
             <span class="input-group-addon bar-style" ng-click="fetch()"><i class="glyphicon glyphicon-search"></i></span>
         </div>
+
+        <button class="btn btn-warning" ng-click="clearWebStorage()">Clear WebStorage</button>
     </div>
 
     <main id="main-info" class="col-md-12">
@@ -51,7 +53,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="films-list-item" ng-repeat="film in filterFilms = (films | filter: title | filter: year | filter: data.group )">
+                    <tr class="films-list-item" ng-repeat="film in filterFilms = (films | filter: title | filter: year | filter: data.group ) track by $index">
                         <td class="xshort-column center">
                             {{$index + 1}}
                         </td>
